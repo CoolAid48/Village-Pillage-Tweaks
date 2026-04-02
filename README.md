@@ -8,7 +8,7 @@
 ## More Details Below:
 - **Hands Off My Block: Shift click a villager workstation block using a stick by default (or any configurable `minecraft: item_ID`) to restrict villagers from accessing them**
 - **Dynamic Raid Spawn Radius: Allows changing the spawn radius of raid waves via a simple config slider**
-- **Named Wandering Traders: Naming wandering traders and their llamas will prevent them from despawning**
+- **Named Traders: Naming wandering traders and their llamas will prevent them from despawning**
 - **Pathfinding Tweaks: Greatly improves upon villager AI, helping them get unstuck in a few scenarios**
 - **Includes a robust config screen that lets you disable any of these features as you please (Pathfinding tweaks are experimental and disabled by default)**
 - **Required on *both* the dedicated server-side and client-side for some functionality**
