@@ -7,7 +7,7 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'handsoffmyblock'
+rootProject.name = 'village-pillage-tweaks'
 
 include 'common'
 include 'fabric'

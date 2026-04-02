@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "coolaid.villagepillagetweaks.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "minVersion": "0.8",
+  "mixins": [
+    "HandsOffMyPoiManagerMixin",
+    "HandsOffMyServerLevelMixin",
+    "HandsOffMyVillagerMixin",
+    "HandsOffMyServerLevelSetBlockMixin",
+    "RaidMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}
