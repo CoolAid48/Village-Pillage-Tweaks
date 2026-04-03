@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Level.class)
-public class HandsOffMyServerLevelSetBlockMixin {
+public class LevelMixin {
 
     @Inject(method = "setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z", at = @At("HEAD"), require = 0)
     private void handsOffMyBlock_captureDestroyReason3(BlockPos pos, BlockState newState, int flags, CallbackInfoReturnable<Boolean> cir) {

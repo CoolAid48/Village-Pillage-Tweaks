@@ -1,6 +1,6 @@
 package coolaid.villagepillagetweaks.mixin;
 
-import coolaid.villagepillagetweaks.config.HandsOffMyConfigManager;
+import coolaid.villagepillagetweaks.config.ConfigManager;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.npc.villager.Villager;
@@ -12,15 +12,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Villager.class)
-public abstract class HandsOffMyVillagerMixin extends AbstractVillager {
+public abstract class VillagerMixin extends AbstractVillager {
 
-    public HandsOffMyVillagerMixin(EntityType<? extends AbstractVillager> entityType, Level world) {
+    public VillagerMixin(EntityType<? extends AbstractVillager> entityType, Level world) {
         super(entityType, world);
     }
 
     @Inject(at = @At("TAIL"), method = "<init>")
     public void villagerInit(EntityType<? extends AbstractVillager> entityType, Level world, CallbackInfo ci) {
-        if (HandsOffMyConfigManager.get().pathfindingTweaks) {
+        if (ConfigManager.get().pathfindingTweaks) {
             this.setPathfindingMalus(PathType.TRAPDOOR, -1);
         }
     }

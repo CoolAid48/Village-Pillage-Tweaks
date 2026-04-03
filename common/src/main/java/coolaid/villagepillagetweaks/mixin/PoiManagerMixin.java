@@ -14,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Optional;
 
 @Mixin(PoiManager.class)
-public class HandsOffMyPoiManagerMixin {
+public class PoiManagerMixin {
 
     @Inject(method = "getType", at = @At("HEAD"), cancellable = true)
     private void handsOffMyBlock_blockPOI(BlockPos pos, CallbackInfoReturnable<Optional<PoiType>> cir) {

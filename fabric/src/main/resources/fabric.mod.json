@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "handsoffmyblock",
+  "id": "villagepillagetweaks",
   "version": "${version}",
   "name": "Village and Pillage Tweaks",
   "description": "A collection of server-side villager/pillager-related tweaks",
@@ -8,7 +8,7 @@
     "CoolAid48"
   ],
   "contributors": [
-    "Mod icon by PurpleSquirrel1503"
+    "PurpleSquirrel1503 (Mod icon)"
   ],
   "contact": {
     "homepage": "https://coolaid.live/",
@@ -16,21 +16,21 @@
     "sources": "https://github.com/CoolAid48/Village-Pillage-Tweaks"
   },
   "license": "MIT",
-  "icon": "assets/handsoffmyblock/icon.png",
+  "icon": "assets/villagepillagetweaks/icon.png",
   "environment": "*",
   "entrypoints": {
     "main": [
-      "coolaid.handsoffmyblock.fabric.HandsOffMyBlockFabric"
+      "coolaid.villagepillagetweaks.fabric.VillagePillageTweaksFabric"
     ],
     "client": [
-      "coolaid.handsoffmyblock.fabric.client.HandsOffMyBlockFabricClient"
+      "coolaid.villagepillagetweaks.fabric.client.VillagePillageTweaksFabricClient"
     ],
     "modmenu": [
-      "coolaid.handsoffmyblock.fabric.compat.ModMenu"
+      "coolaid.villagepillagetweaks.fabric.compat.ModMenu"
     ]
   },
   "mixins": [
-    "handsoffmyblock.mixins.json"
+    "villagepillagetweaks.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.18.4",
@@ -42,7 +42,7 @@
       "links": {
         "modmenu.donate" : "https://ko-fi.com/coolaid48",
         "modmenu.discord": "https://discord.gg/J2SGshKNah",
-        "modmenu.modrinth": "https://modrinth.com/mod/hands-off-my-block"
+        "modmenu.modrinth": "https://modrinth.com/mod/village-pillage-tweaks"
       }
     }
   }

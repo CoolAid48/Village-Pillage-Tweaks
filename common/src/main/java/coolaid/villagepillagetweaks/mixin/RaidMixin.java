@@ -1,5 +1,6 @@
 package coolaid.villagepillagetweaks.mixin;
 
+import coolaid.villagepillagetweaks.config.ConfigManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
@@ -21,15 +22,15 @@ public abstract class RaidMixin {
             cancellable = true
     )
     private void overrideRaidSpawnLocation(ServerLevel world, CallbackInfoReturnable<Optional<BlockPos>> cir) {
-        int radius = DynamicRaidSpawnRadius.CONFIG.raidSpawnRadius;
+        int radius = Mth.clamp(ConfigManager.get().raidSpawnRadius, 0, 96);
 
         // Get raid center
-        BlockPos center = ((Raid)(Object)this).getCenter(); // use accessor if private
+        BlockPos center = ((Raid) (Object) this).getCenter();
 
         // Random offset around center
-        float angle = world.random.nextFloat() * ((float)Math.PI * 2F);
-        int offsetX = (int)(Mth.cos(angle) * radius);
-        int offsetZ = (int)(Mth.sin(angle) * radius);
+        float angle = world.getRandom().nextFloat() * ((float) Math.PI * 2F);
+        int offsetX = (int) (Mth.cos(angle) * radius);
+        int offsetZ = (int) (Mth.sin(angle) * radius);
 
         BlockPos.MutableBlockPos spawnPos = center.mutable().move(offsetX, 0, offsetZ);
 

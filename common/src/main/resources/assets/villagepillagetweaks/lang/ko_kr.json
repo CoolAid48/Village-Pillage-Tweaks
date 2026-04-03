@@ -3,18 +3,14 @@
   "key.handsoffmyblock.open_config": "설정 화면 열기",
   "key.handsoffmyblock.show_markings": "표시 여부 토글",
   "key.handsoffmyblock.require_sneaking": "웅크리기 필요 여부 토글",
-  "text.configScreen.title": "Hands Off My Block 설정",
+  "text.configScreen.title": "Village and Pillage Tweaks 설정",
   "text.configScreen.label": "유효한 아이템 ID 입력",
-
   "text.configButton.save_and_exit": "저장 및 나가기",
-  "text.configButton.workstationToggle": "블록 표시: %s",
-  "text.configButton.sneakToggle": "웅크리기 필요: %s",
-  "text.configButton.bedToggle": "침대 표시: %s",
-  "text.configButton.tweakToggle": "경로 찾기 보정: %s",
-  "text.configButton.showMarkings": "표시 보이기: %s",
-  "component.configButton.yes": "§a예",
-  "component.configButton.no": "§c아니요",
-
+  "text.configButton.workstationToggle": "블록 표시",
+  "text.configButton.sneakToggle": "웅크리기 필요",
+  "text.configButton.bedToggle": "침대 표시",
+  "text.configButton.tweakToggle": "경로 찾기 보정",
+  "text.configButton.showMarkings": "표시 보이기",
   "message.actionbar.marked": "표시됨: ",
   "message.actionbar.unmarked": "표시 해제됨: ",
   "message.actionbar.workstationToggle": "블록 표시: ",
@@ -30,8 +26,13 @@
   "component.actionbar.unknown": "삭제됨",
   "component.actionbar.enabled": "활성화됨",
   "component.actionbar.disabled": "비활성화됨",
-
   "message.actionbar.configSaved": "§a설정이 저장되었습니다! §f표시 아이템: %s",
   "message.actionbar.configFailed": "§c설정 저장 실패! §f유효하지 않은 아이템 ID입니다",
-  "message.actionbar.onServer": "멀티플레이어에서 이용 불가"
+  "message.actionbar.onServer": "멀티플레이어에서 이용 불가",
+  "text.configCategory.handsOffMyBlock": "Hands Off My Block",
+  "text.configCategory.dynamicRaidRadius": "동적 습격 반경",
+  "text.configCategory.namedTraders": "이름 붙은 상인",
+  "text.configCategory.pathfindingTweaks": "경로 찾기 보정",
+  "text.configOption.raidSpawnRadius": "습격 생성 반경",
+  "text.configOption.comingSoon": "업데이트 예정"
 }

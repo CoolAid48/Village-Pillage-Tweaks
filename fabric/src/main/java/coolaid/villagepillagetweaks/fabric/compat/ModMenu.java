@@ -7,6 +7,6 @@ import coolaid.villagepillagetweaks.fabric.client.ConfigScreenFabric;
 public class ModMenu implements ModMenuApi {
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
-        return ConfigScreenFabric::new;
+        return ConfigScreenFabric::create;
     }
 }

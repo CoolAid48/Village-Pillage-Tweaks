@@ -3,18 +3,14 @@
   "key.handsoffmyblock.open_config": "Open Config Screen",
   "key.handsoffmyblock.show_markings": "Show Markings",
   "key.handsoffmyblock.require_sneaking": "Require Sneaking",
-  "text.configScreen.title": "Hands Off My Block Config",
+  "text.configScreen.title": "Village and Pillage Tweaks Config",
   "text.configScreen.label": "Input valid item ID",
-
   "text.configButton.save_and_exit": "Save and Exit",
-  "text.configButton.workstationToggle": "Block Marking: %s",
-  "text.configButton.sneakToggle": "Require Sneaking: %s",
-  "text.configButton.bedToggle": "Bed Marking: %s",
-  "text.configButton.tweakToggle": "Pathfinding Tweaks: %s",
-  "text.configButton.showMarkings": "Show Markings: %s",
-  "component.configButton.yes": "§aYes",
-  "component.configButton.no": "§cNo",
-
+  "text.configButton.workstationToggle": "Block Marking",
+  "text.configButton.sneakToggle": "Require Sneaking",
+  "text.configButton.bedToggle": "Bed Marking",
+  "text.configButton.tweakToggle": "Pathfinding Tweaks",
+  "text.configButton.showMarkings": "Show Markings",
   "message.actionbar.marked": "Marked ",
   "message.actionbar.unmarked": "Unmarked ",
   "message.actionbar.workstationToggle": "Block Marking: ",
@@ -30,8 +26,13 @@
   "component.actionbar.unknown": "Destroyed",
   "component.actionbar.enabled": "Enabled",
   "component.actionbar.disabled": "Disabled",
-
   "message.actionbar.configSaved": "§aConfig saved! §fMarker item set to: %s",
   "message.actionbar.configFailed": "§cFailed to save config! §fInvalid item ID",
-  "message.actionbar.onServer": "Unavailable on Multiplayer"
+  "message.actionbar.onServer": "Unavailable on Multiplayer",
+  "text.configCategory.handsOffMyBlock": "Hands Off My Block",
+  "text.configCategory.dynamicRaidRadius": "Dynamic Raid Radius",
+  "text.configCategory.namedTraders": "Named Traders",
+  "text.configCategory.pathfindingTweaks": "Pathfinding Tweaks",
+  "text.configOption.raidSpawnRadius": "Raid Spawn Radius",
+  "text.configOption.comingSoon": "Coming Soon"
 }

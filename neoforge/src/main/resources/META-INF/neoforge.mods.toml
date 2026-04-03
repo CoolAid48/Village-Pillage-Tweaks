@@ -1,19 +1,19 @@
 modLoader = "javafml"
 loaderVersion = "[2,)"
-issueTrackerURL = "https://github.com/CoolAid48/Hands-Off-My-Block/issues"
+issueTrackerURL = "https://github.com/CoolAid48/Village-Pillage-Tweaks/issues"
 license = "MIT"
 
 [[mods]]
-modId = "handsoffmyblock"
+modId = "villagepillagetweaks"
 version = "${version}"
-displayName = "Hands Off My Block"
+displayName = "Village and Pillage Tweaks"
 authors = "CoolAid48"
-credits = "Mod icon by PurpleSquirrel1503"
+credits = "PurpleSquirrel1503 (Mod icon)"
 description = '''
-Mark workstation blocks and beds to stop villagers from claiming them
+A collection of server-side villager/pillager-related tweaks
 '''
 
-logoFile = "assets/handsoffmyblock/icon.png"
+logoFile = "assets/villagepillagetweaks/icon.png"
 
 [[mixins]]
-config = "handsoffmyblock.mixins.json"
+config = "villagepillagetweaks.mixins.json"

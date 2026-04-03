@@ -4,11 +4,13 @@
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "mixins": [
-    "HandsOffMyPoiManagerMixin",
-    "HandsOffMyServerLevelMixin",
-    "HandsOffMyVillagerMixin",
-    "HandsOffMyServerLevelSetBlockMixin",
-    "RaidMixin"
+    "LevelMixin",
+    "PoiManagerMixin",
+    "RaidMixin",
+    "ServerLevelMixin",
+    "TraderLlamaMixin",
+    "VillagerMixin",
+    "WanderingTraderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

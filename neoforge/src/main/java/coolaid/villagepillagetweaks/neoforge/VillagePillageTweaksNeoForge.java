@@ -1,14 +1,10 @@
-package coolaid.villagepillagetweaks.fabric;
+package coolaid.villagepillagetweaks.neoforge;
 
 import coolaid.villagepillagetweaks.VillagePillageTweaks;
-import coolaid.villagepillagetweaks.config.HandsOffMyConfigManager;
 import coolaid.villagepillagetweaks.util.HandsOffMyBlockAccessManager;
 import coolaid.villagepillagetweaks.util.HandsOffMyBlockSets;
 import coolaid.villagepillagetweaks.util.HandsOffMyPoiRefreshHelper;
 import coolaid.villagepillagetweaks.util.HandsOffMyVillagerMemoryHelper;
-import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.GlobalPos;
@@ -27,85 +23,92 @@ import net.minecraft.world.level.block.BedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.AABB;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.level.BlockEvent;
 
-public final class HandsOffMyBlockFabric implements ModInitializer {
-
+@Mod(VillagePillageTweaksNeoForge.MOD_ID)
+public final class VillagePillageTweaksNeoForge {
+    public static final String MOD_ID = "handsoffmyblock";
     public static Item MARKER_ITEM = Items.STICK;
 
-    @Override
-    public void onInitialize() {
+    public VillagePillageTweaksNeoForge(IEventBus modEventBus) {
+        // Register server-side setup
+        NeoForge.EVENT_BUS.addListener(this::onRightClickBlock);
+        NeoForge.EVENT_BUS.addListener(this::onBlockBreak);
 
         VillagePillageTweaks.init();
         reloadMarkerItemFromConfig();
+        ExternalBlockListenerNeoForge.register();
+    }
 
-        UseBlockCallback.EVENT.register((player, world, hand, hit) -> {
-            if (world.isClientSide()) return InteractionResult.PASS;
+    private void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        if (event.getLevel().isClientSide()) return;
 
-            var config = HandsOffMyConfigManager.get();
+        var config = HandsOffMyConfigManager.get();
 
-            // Config marker item
-            ItemStack held = player.getItemInHand(hand);
-            Item markerItem = BuiltInRegistries.ITEM.getOptional(config.markerItem).orElse(Items.STICK);
-            if (held.getItem() != markerItem) return InteractionResult.PASS;
+        // Config marker item
+        ItemStack held = event.getItemStack();
+        Item markerItem = BuiltInRegistries.ITEM.getOptional(config.markerItem).orElse(Items.STICK);
+        if (!held.is(markerItem)) return;
 
-            BlockPos pos = hit.getBlockPos();
-            BlockState state = world.getBlockState(pos);
-            Block block = state.getBlock();
-            boolean isBed = block instanceof BedBlock;
+        BlockPos pos = event.getPos();
+        BlockState state = event.getLevel().getBlockState(pos);
+        Block block = state.getBlock();
+        boolean isBed = block instanceof BedBlock;
 
-            // CONFIG TOGGLES
-            // (pathfindingTweaks is handled in VillagerMixin and actionBarMessages is handled in sendActionBarToPlayer() )
-            if (!isBed && (!HandsOffMyBlockSets.WORKSTATIONS.contains(block) || !config.enableWorkstationMarking)) return InteractionResult.PASS; // workstation toggle
-            if (config.requireSneaking && !player.isCrouching()) return InteractionResult.PASS; // sneaking toggle
-            if (isBed && !config.enableBedMarking) return InteractionResult.PASS; // bed toggle
+        // CONFIG TOGGLES
+        if (!isBed && (!HandsOffMyBlockSets.WORKSTATIONS.contains(block) || !config.enableWorkstationMarking)) return;
+        if (config.requireSneaking && !event.getEntity().isCrouching()) return;
+        if (isBed && !config.enableBedMarking) return;
 
-            if (!(world instanceof ServerLevel serverLevel)) return InteractionResult.PASS;
+        if (!(event.getLevel() instanceof ServerLevel serverLevel)) return;
 
-            BlockPos otherHalf = isBed ? pos.relative(BedBlock.getConnectedDirection(state)) : null;
-            boolean alreadyBlocked = HandsOffMyBlockAccessManager.isBlocked(serverLevel, pos)
-                    || (isBed && HandsOffMyBlockAccessManager.isBlocked(serverLevel, otherHalf));
+        BlockPos otherHalf = isBed ? pos.relative(BedBlock.getConnectedDirection(state)) : null;
+        boolean alreadyBlocked = HandsOffMyBlockAccessManager.isBlocked(serverLevel, pos)
+                || (isBed && HandsOffMyBlockAccessManager.isBlocked(serverLevel, otherHalf));
 
-            if (alreadyBlocked) {
-                unmarkBlockAndInvalidate(serverLevel, pos, isBed, otherHalf, state);
-                sendActionBarToPlayer(player,
-                        Component.translatable("message.actionbar.unmarked").append(block.getName()).withStyle(ChatFormatting.GREEN)
-                );
-            } else {
-                spawnAngryVillagerParticles(serverLevel, pos, otherHalf);
-                markBlockAndInvalidate(serverLevel, pos, isBed, otherHalf, state);
-                sendActionBarToPlayer(player,
-                        Component.translatable("message.actionbar.marked").append(block.getName()).withStyle(ChatFormatting.RED)
-                );
-            }
+        if (alreadyBlocked) {
+            unmarkBlockAndInvalidate(serverLevel, pos, isBed, otherHalf, state);
+            sendActionBarToPlayer(event.getEntity(),
+                    Component.translatable("message.actionbar.unmarked").append(block.getName()).withStyle(ChatFormatting.GREEN)
+            );
+        } else {
+            spawnAngryVillagerParticles(serverLevel, pos, otherHalf);
+            markBlockAndInvalidate(serverLevel, pos, isBed, otherHalf, state);
+            sendActionBarToPlayer(event.getEntity(),
+                    Component.translatable("message.actionbar.marked").append(block.getName()).withStyle(ChatFormatting.RED)
+            );
+        }
 
-            return InteractionResult.SUCCESS;
-        });
+        event.setCanceled(true);
+        event.setCancellationResult(InteractionResult.SUCCESS);
+    }
 
-        PlayerBlockBreakEvents.BEFORE.register((world, player, pos, state, blockEntity) -> {
-            if (world.isClientSide()) return true;
-            if (!(world instanceof ServerLevel serverLevel)) return true;
+    private void onBlockBreak(BlockEvent.BreakEvent event) {
+        if (event.getLevel().isClientSide()) return;
+        if (!(event.getLevel() instanceof ServerLevel serverLevel)) return;
 
-            Block block = state.getBlock();
-            boolean isBed = block instanceof BedBlock;
+        BlockPos pos = event.getPos();
+        BlockState state = event.getState();
+        Block block = state.getBlock();
+        boolean isBed = block instanceof BedBlock;
 
-            // Only care about blocks that can be marked
-            if (!isBed && !HandsOffMyBlockSets.WORKSTATIONS.contains(block)) return true;
+        // Only care about blocks that can be marked
+        if (!isBed && !HandsOffMyBlockSets.WORKSTATIONS.contains(block)) return;
 
-            // Check if this block is marked, then remove POI
-            if (HandsOffMyBlockAccessManager.isBlocked(serverLevel, pos)) {
-                HandsOffMyBlockAccessManager.notifyBrokenUnmark(serverLevel, pos, state, HandsOffMyBlockFabric::sendActionBarToPlayer);
-                unmarkBlockAndInvalidate(serverLevel, pos, isBed, isBed ? pos.relative(BedBlock.getConnectedDirection(state)) : null, state);
-            }
-
-            return true;
-        });
-
-        ExternalBlockListenerFabric.register();
+        // Check if this block is marked, then remove POI
+        if (HandsOffMyBlockAccessManager.isBlocked(serverLevel, pos)) {
+            HandsOffMyBlockAccessManager.notifyBrokenUnmark(serverLevel, pos, state, VillagePillageTweaksNeoForge::sendActionBarToPlayer);
+            unmarkBlockAndInvalidate(serverLevel, pos, isBed, isBed ? pos.relative(BedBlock.getConnectedDirection(state)) : null, state);
+        }
     }
 
     public static void sendActionBarToPlayer(net.minecraft.world.entity.player.Player player, Component message) {
         if (HandsOffMyConfigManager.get().actionBarMessages) {
-            player.sendOverlayMessage(message);
+            player.displayClientMessage(message, true);
         }
     }
 
