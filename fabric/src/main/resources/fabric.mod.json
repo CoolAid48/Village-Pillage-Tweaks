@@ -3,7 +3,7 @@
   "id": "villagepillagetweaks",
   "version": "${version}",
   "name": "Village and Pillage Tweaks",
-  "description": "A collection of server-side villager/pillager-related tweaks",
+  "description": "A collection of server-side tweaks to villagers and pillagers",
   "authors": [
     "CoolAid48"
   ],
@@ -20,13 +20,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "coolaid.villagepillagetweaks.fabric.VillagePillageTweaksFabric"
-    ],
-    "client": [
-      "coolaid.villagepillagetweaks.fabric.client.VillagePillageTweaksFabricClient"
+      "me.coolaid.villagepillagetweaks.fabric.VillagePillageTweaksFabric"
     ],
     "modmenu": [
-      "coolaid.villagepillagetweaks.fabric.compat.ModMenu"
+      "me.coolaid.villagepillagetweaks.fabric.compat.ModMenu"
     ]
   },
   "mixins": [

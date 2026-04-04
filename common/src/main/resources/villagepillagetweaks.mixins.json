@@ -4,13 +4,13 @@
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "mixins": [
-    "LevelMixin",
-    "PoiManagerMixin",
-    "RaidMixin",
-    "ServerLevelMixin",
-    "TraderLlamaMixin",
-    "VillagerMixin",
-    "WanderingTraderMixin"
+    "me.coolaid.villagepillagetweaks.mixin.LevelMixin",
+    "me.coolaid.villagepillagetweaks.mixin.PoiManagerMixin",
+    "me.coolaid.villagepillagetweaks.mixin.RaidMixin",
+    "me.coolaid.villagepillagetweaks.mixin.ServerLevelMixin",
+    "me.coolaid.villagepillagetweaks.mixin.TraderLlamaMixin",
+    "me.coolaid.villagepillagetweaks.mixin.VillagerMixin",
+    "me.coolaid.villagepillagetweaks.mixin.WanderingTraderMixin"
   ],
   "injectors": {
     "defaultRequire": 1

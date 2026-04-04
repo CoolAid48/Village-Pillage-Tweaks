@@ -10,7 +10,7 @@ displayName = "Village and Pillage Tweaks"
 authors = "CoolAid48"
 credits = "PurpleSquirrel1503 (Mod icon)"
 description = '''
-A collection of server-side villager/pillager-related tweaks
+A collection of server-side tweaks to villagers and pillagers
 '''
 
 logoFile = "assets/villagepillagetweaks/icon.png"
