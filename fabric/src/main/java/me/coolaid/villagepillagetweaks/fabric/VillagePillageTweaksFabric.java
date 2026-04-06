@@ -2,11 +2,13 @@ package me.coolaid.villagepillagetweaks.fabric;
 
 import me.coolaid.villagepillagetweaks.VillagePillageTweaks;
 import me.coolaid.villagepillagetweaks.config.ConfigManager;
+import me.coolaid.villagepillagetweaks.data.HandsOffMyWorldDataMigrator;
 import me.coolaid.villagepillagetweaks.util.HandsOffMyBlockAccessManager;
 import me.coolaid.villagepillagetweaks.util.HandsOffMyBlockSets;
 import me.coolaid.villagepillagetweaks.util.HandsOffMyPoiRefreshHelper;
 import me.coolaid.villagepillagetweaks.util.HandsOffMyVillagerMemoryHelper;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.ChatFormatting;
@@ -35,6 +37,7 @@ public final class VillagePillageTweaksFabric implements ModInitializer {
     @Override
     public void onInitialize() {
 
+        ServerLifecycleEvents.SERVER_STARTING.register(HandsOffMyWorldDataMigrator::migrate);
         VillagePillageTweaks.init();
         reloadMarkerItemFromConfig();
 

@@ -2,6 +2,7 @@ package me.coolaid.villagepillagetweaks.neoforge;
 
 import me.coolaid.villagepillagetweaks.VillagePillageTweaks;
 import me.coolaid.villagepillagetweaks.config.ConfigManager;
+import me.coolaid.villagepillagetweaks.data.HandsOffMyWorldDataMigrator;
 import me.coolaid.villagepillagetweaks.util.HandsOffMyBlockAccessManager;
 import me.coolaid.villagepillagetweaks.util.HandsOffMyBlockSets;
 import me.coolaid.villagepillagetweaks.util.HandsOffMyPoiRefreshHelper;
@@ -26,6 +27,7 @@ import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.loading.FMLEnvironment;
@@ -34,6 +36,7 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.level.BlockEvent;
 import me.coolaid.villagepillagetweaks.neoforge.client.ConfigScreenNeoForge;
+import net.neoforged.neoforge.event.server.ServerStartingEvent;
 
 @Mod(VillagePillageTweaksNeoForge.MOD_ID)
 public final class VillagePillageTweaksNeoForge {
@@ -55,6 +58,11 @@ public final class VillagePillageTweaksNeoForge {
         VillagePillageTweaks.init();
         reloadMarkerItemFromConfig();
         ExternalBlockListenerNeoForge.register();
+    }
+
+    @SubscribeEvent
+    public static void onServerStarting(ServerStartingEvent event) {
+        HandsOffMyWorldDataMigrator.migrate(event.getServer());
     }
 
     private void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
